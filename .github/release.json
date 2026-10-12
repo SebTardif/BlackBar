@@ -1,0 +1,15 @@
+{
+  "app": "BlackBar",
+  "repository": "steipete/BlackBar",
+  "bundle_id": "com.steipete.blackbar",
+  "minimum_macos": "14.0",
+  "architectures": [
+    "arm64",
+    "x86_64"
+  ],
+  "sparkle_public_key": "oIgha2beQWnyCXgOIlB8+oaUzFNtWgkqq6jKXNNDhv4=",
+  "assets": [
+    "BlackBar-{version}.zip",
+    "BlackBar-{version}.dSYM.zip"
+  ]
+}
