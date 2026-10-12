@@ -1,4 +1,4 @@
-.PHONY: build app run test ci release clean
+.PHONY: build app run test ci clean
 
 APP_NAME := BlackBar
 
@@ -28,9 +28,6 @@ ci: test
 	swift package resolve
 	swift build -c release
 	$(MAKE) app
-
-release:
-	./Scripts/release.sh
 
 clean:
 	rm -rf .build build *.zip *.dSYM
