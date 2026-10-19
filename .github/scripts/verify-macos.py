@@ -44,26 +44,27 @@ subprocess.run(['spctl', '--assess', '--type', 'execute', '--verbose=2', str(app
 subprocess.run(['xcrun', 'stapler', 'validate', str(app)], check=True)
 if config['app'] == 'Nameplate':
     subprocess.run([str(app / 'Contents/Helpers/nameplate'), '--help'], check=True)
-with tempfile.TemporaryDirectory() as home:
-    environment = dict(os.environ, HOME=home, CFFIXED_USER_HOME=home)
-    for name in [
-        'SPARKLE_PRIVATE_KEY',
-        'GH_TOKEN',
-        'GITHUB_TOKEN',
-        'MACOS_SIGNING_P12',
-        'MACOS_SIGNING_P12_PASSWORD',
-        'APP_STORE_CONNECT_API_KEY_P8',
-    ]:
-        environment.pop(name, None)
-    process = subprocess.Popen([str(main)], env=environment)
-    try:
-        time.sleep(8)
-        assert process.poll() is None, 'App exited during launch smoke test'
-    finally:
-        process.terminate()
+for arch in sorted(required):
+    with tempfile.TemporaryDirectory() as home:
+        environment = dict(os.environ, HOME=home, CFFIXED_USER_HOME=home)
+        for name in [
+            'SPARKLE_PRIVATE_KEY',
+            'GH_TOKEN',
+            'GITHUB_TOKEN',
+            'MACOS_SIGNING_P12',
+            'MACOS_SIGNING_P12_PASSWORD',
+            'APP_STORE_CONNECT_API_KEY_P8',
+        ]:
+            environment.pop(name, None)
+        process = subprocess.Popen(['arch', '-' + arch, str(main)], env=environment)
         try:
-            process.wait(timeout=10)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait()
+            time.sleep(8)
+            assert process.poll() is None, f'App exited during {arch} launch smoke test'
+        finally:
+            process.terminate()
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
 print('Verified metadata, architectures, all Mach-O minimum OS versions, signing, notarization, and launch')

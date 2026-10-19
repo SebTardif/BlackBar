@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Move CI and release builds to `xcode-27`, retain macOS 14 support, and verify the signed universal app under both native arm64 and Rosetta x86_64.
+
 ## 0.3.3 - 2026-09-30
 
 **Highlights:** Fixes the 0.3.2 launch crash and updates Sparkle to 2.10.0.
