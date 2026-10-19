@@ -21,8 +21,9 @@ jobs:
         run: python3 -m unittest discover -s .github/scripts -p "test_*.py"
       - name: Show tool versions
         run: |
-          xcodebuild -version
-          xcodebuild -version | grep -Eq '^Xcode 27([.]|$)'
+          xcode_version="$(xcodebuild -version)"
+          printf '%s\n' "$xcode_version"
+          [[ "$xcode_version" == 'Xcode 27.'* ]]
           swift --version
 
       - name: Resolve Swift packages

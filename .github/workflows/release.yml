@@ -98,8 +98,9 @@ jobs:
           persist-credentials: false
       - name: Verify Xcode 27 and Rosetta
         run: |
-          xcodebuild -version
-          xcodebuild -version | grep -Eq '^Xcode 27([.]|$)'
+          xcode_version="$(xcodebuild -version)"
+          printf '%s\n' "$xcode_version"
+          [[ "$xcode_version" == 'Xcode 27.'* ]]
           if ! arch -x86_64 /usr/bin/true; then
             sudo softwareupdate --install-rosetta --agree-to-license
           fi
