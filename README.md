@@ -59,6 +59,9 @@ There is no BlackBar-operated proxy or backend, and the app includes no analytic
 ## Development
 
 Building requires macOS 14 or later and a Swift 6 toolchain.
+CI uses the Apple Silicon macOS 27 `xcode-27` image with Xcode 27 and retains
+the macOS 14 deployment target. Release verification launches both universal
+binary architectures, using Rosetta for x86_64.
 
 ```sh
 make ci    # tests, release build, and app bundle
