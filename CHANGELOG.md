@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Post "Job finished" only when a previously active run is still in the snapshot with a finished status, and fail the jobs request instead of treating a bad response as an empty list.
 - Move CI and release builds to `xcode-27`, retain macOS 14 support, and verify the signed universal app under both native arm64 and Rosetta x86_64.
 
 ## 0.3.3 - 2026-09-30
